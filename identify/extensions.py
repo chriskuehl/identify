@@ -50,9 +50,10 @@ EXTENSIONS = {
     'gif': {'binary', 'image', 'gif'},
     'go': {'text', 'go'},
     'gotmpl': {'text', 'gotmpl'},
+    'gpg': {'binary', 'gnupg'},
     'gpx': {'text', 'gpx', 'xml'},
-    'graphql': {'text', 'graphql'},
     'gradle': {'text', 'groovy'},
+    'graphql': {'text', 'graphql'},
     'groovy': {'text', 'groovy'},
     'gyb': {'text', 'gyb'},
     'gyp': {'text', 'gyp', 'python'},
@@ -157,7 +158,6 @@ EXTENSIONS = {
     'scss': {'text', 'scss'},
     'sh': {'text', 'shell'},
     'sln': {'text', 'sln'},
-    'sls': {'text', 'salt'},
     'so': {'binary'},
     'sol': {'text', 'solidity'},
     'spec': {'text', 'spec'},
@@ -222,6 +222,9 @@ EXTENSIONS = {
 }
 EXTENSIONS_NEED_BINARY_CHECK = {
     'plist': {'plist'},
+}
+EXTENSIONS_NEED_INTERPRETER_CHECK = {
+    'sls': {'text', 'salt'},
 }
 
 NAMES = {

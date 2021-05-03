@@ -146,6 +146,47 @@ def test_tags_from_path_plist_text(tmpdir):
 
 
 @pytest.mark.parametrize(
+    ('interpreter', 'expected'),
+    (
+        ('dson', {'salt', 'file', 'non-executable', 'text'}),
+        ('genshi', {'salt', 'file', 'non-executable', 'text'}),
+        ('gpg', {'salt', 'file', 'non-executable', 'text', 'gnupg'}),
+        ('jinja', {'salt', 'file', 'non-executable', 'text', 'jinja'}),
+        ('jinja|py', {'salt', 'file', 'non-executable', 'text', 'jinja'}),
+        ('jinja|yaml', {'salt', 'file', 'non-executable', 'text', 'jinja'}),
+        (
+            'jinja|yaml|gpg', {
+                'salt', 'file', 'non-executable', 'text', 'jinja',
+            },
+        ),
+        ('py', {'salt', 'file', 'non-executable', 'text', 'python'}),
+        ('pydsl', {'salt', 'file', 'non-executable', 'text', 'python'}),
+        ('pyobjects', {'salt', 'file', 'non-executable', 'text', 'python'}),
+        ('wempy', {'salt', 'file', 'non-executable', 'text'}),
+        ('yaml', {'salt', 'file', 'non-executable', 'text', 'yaml'}),
+        ('yamlex', {'salt', 'file', 'non-executable', 'text'}),
+        ('yaml|gpg', {'salt', 'file', 'non-executable', 'text', 'yaml'}),
+    ),
+)
+@pytest.mark.parametrize(
+    ('interpreter_prefix',),
+    (
+        ('#!',),
+        ('#! ',),
+    ),
+)
+def test_tags_from_path_with_interpreter_check(
+    tmpdir,
+    interpreter_prefix,
+    interpreter,
+    expected,
+):
+    x = tmpdir.join('test.sls')
+    x.write(interpreter_prefix + interpreter)
+    assert identify.tags_from_path(x.strpath) == expected
+
+
+@pytest.mark.parametrize(
     ('filename', 'expected'),
     (
         ('test.py', {'text', 'python'}),
